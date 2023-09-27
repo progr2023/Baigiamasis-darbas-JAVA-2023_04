@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+    <div th:insert="fragments/navbar.html"></div>
+<table class="table table-striped">
+  <tr>
+    <th>Pavadinimas</th>
+    <td th:text="${filmai.getPavadinimas()}"></td>
+  </tr>
+  <tr>
+    <th>Aprašymas</th>
+    <td th:text="${filmai.getAprasymas()}"></td>
+  </tr>
+  <tr>
+    <th>IMDB reitingas</th>
+    <td th:text="${filmai.getImdbReitingas()}"></td>
+  </tr>
+
+</table>
+<div>
+    <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/filmai/istrinti/} + ${filmas.getId()}" method="post">
+        <input type="submit" value="Ištrinti">
+    </form>
+    <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/filmai/redagavimas/} + ${filmas.getId()}" method="get">
+        <input type="submit" value="Redaguoti">
+    </form>
+</div>
+<div th:each="komentaras : ${filmai.getKomentarai()}">
+    <div class="card">
+        <div th:text="${komentaras.getPridejimoData()}" class="card-header"></div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p th:text="${komentaras.getTekstas()}"></p>
+                <footer th:text="${komentaras.getVartotojai().getUsername()}" class="blockquote-footer"></footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+<div>
+    <form th:action="@{/komentaras/prideti/} + ${filmai.getId()}" method="post">
+        <div class="form-group">
+            <label for="pridedamasKomentaras">Pridėti komentarą</label>
+            <textarea class="form-control col-5" th:value="${pridedamasKomentaras}" id="pridedamasKomentaras" name="pridedamasKomentaras" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Pridėti komentarą" class="btn btn-info col-2">
+        </div>
+    </form>
+</div>
+</body>
+</html>

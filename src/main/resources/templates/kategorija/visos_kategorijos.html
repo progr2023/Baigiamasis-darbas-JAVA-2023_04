@@ -1,0 +1,26 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Visos kategorijos</title>
+</head>
+<body>
+    <div th:insert="fragments/navbar.html"></div>
+
+
+     <div th:each="kategorija : ${visosKategorijos}" class="list-group">
+         <a th:text = "${kategorija.getPavadinimas()}" th:href="@{/kategorijos/visi-filmai/} + ${kategorija.getId()}" class="list-group-item list-group-item-action"></a>
+
+     </div>
+<form th:action="@{/kategorija/istrinti/}" method ="post" ></form>
+<input type="submit" value="Ištrinti">
+
+
+
+</body>
+</html>
