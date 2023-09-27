@@ -18,10 +18,11 @@
   <a th:text = "${filmai.getPavadinimas()}" th:href="@{/filmai/informacija/} + ${kategorija.getId()}" class="list-group-item list-group-item-action"></a>
 
 </div>
-<<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/kategorija/istrinti/} + ${kategorija.getId()}" method="post">
+<form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/kategorija/istrinti/} + ${kategorija.getId()}" method="post">
     <input type="submit" value="Ištrinti">
   </form>
   <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/kategorija/redagavimas/} + ${kategorija.getId()}" method="get">
     <input type="submit" value="Redaguoti">
+  </form>
 </body>
 </html>
